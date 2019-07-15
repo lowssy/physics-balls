@@ -1,9 +1,9 @@
 import Ball from './Ball.js'
-import {getRandomBetween, scaleValue, getRandomColor} from './Tools.js'
+import {getRandomBetween, scaleValue, getRandomColor, getBlur} from './Tools.js'
 
 const WIDTH = 500
 const HEIGHT = 500
-const BALLS_TOTAL = 30
+const BALLS_TOTAL = 16
 
 const canvas = document.getElementById('canvas')
 canvas.width = WIDTH
@@ -19,16 +19,17 @@ for(let i = 0; i < BALLS_TOTAL; i++) {
   let dx = getRandomBetween(-2, 2)
   let dy = scaleValue(radius, [10, 30], [0, 2])
 
-  balls.push(new Ball(x, y, radius, dx, dy, getRandomColor()))
+  balls.push(new Ball(x, y, radius, dx, dy, getRandomColor(radius), getBlur(radius)))
   balls[i].draw(ctx)
 }
 
-setInterval(loop, 10)
-
 function loop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  window.requestAnimationFrame(loop)
+  ctx.clearRect(0, 0, WIDTH, HEIGHT)
 
   balls.forEach(ball => {
     ball.update(ctx)
   })
 }
+
+loop()

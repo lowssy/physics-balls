@@ -4,14 +4,14 @@ const FRICTION = 0.99
 const ACCELERATION = 1
 
 class Ball {
-  constructor(x, y, radius, dx, dy, color) {
+  constructor(x, y, radius, dx, dy, color, blur) {
     this.x = x
     this.y = y
     this.dy = dy
     this.dx = dx
     this.radius = radius
     this.color = color
-    console.log(this.dy)
+    this.blur = blur
   }
 
   update(ctx) {
@@ -34,7 +34,7 @@ class Ball {
   draw(ctx) {
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-    // ctx.ellipse(this.x + this.radius, this.y + this.radius, this.radius, this.radius, 0, 0, Math.PI * 2)
+    ctx.filter = this.blur
     ctx.fillStyle = this.color
     ctx.fill()
     // ctx.stroke()
